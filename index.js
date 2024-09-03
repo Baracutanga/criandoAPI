@@ -16,24 +16,24 @@ app.post("/users", async (req, res) => {
 
     const newUser = await User.create(user)
 
-    return res.json(newUser);
+    return res.json("Usuário adicionado com sucesso!");
 })
 
 app.delete("/users/:id", async (req, res) => {
     const { id } = req.params;
 
-    await User.findByIdAndDelete(id);
+    const updateUser = await User.findByIdAndDelete(id);
 
     return res.json("Usuário deletado com sucesso!")
 })
 
+app.patch("/users/:id", async (req, res) => {
+    const { id } = req.params;
+    const update = req.body;
 
-// Nome e senha
-// jambo
-// q9w6qDoCZLcQ5wbO
+    await User.findByIdAndUpdate(id, update, { new: true });
 
-mongoose.connect("mongodb+srv://jambo:q9w6qDoCZLcQ5wbO@users.rznqc.mongodb.net/?retryWrites=true&w=majority&appName=Users")
-    .then( () => console.log("banco de dados conectado"))
-    .catch( () => console.log("vish..."))
+    return res.json("Usuário atualizado com sucesso")
+})
 
 app.listen(3000);
